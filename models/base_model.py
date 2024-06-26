@@ -8,6 +8,7 @@ class BaseModel:
     """A base class for all hbnb models"""
     def __init__(self, *args, **kwargs):
         """instantiates a new model"""
+        from models import storage
         if not kwargs:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
@@ -30,6 +31,7 @@ class BaseModel:
                          if '\\"' in value:
                              value = eval(value)
                          setattr(self, key, value)
+        storage.new(self)
 
     def __str__(self):
         """Returns a string representation of the instance"""

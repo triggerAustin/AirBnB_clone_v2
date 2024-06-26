@@ -139,7 +139,7 @@ class HBNBCommand(cmd.Cmd):
                         else:
                             value = value[1:-1]
                     attr[key] = value
-                new_instance = HBNBCommand.classes[kwargs[0]](**attr)
+        new_instance = HBNBCommand.classes[kwargs[0]](**attr)
         storage.save()
         print(new_instance.id)
         storage.save()
