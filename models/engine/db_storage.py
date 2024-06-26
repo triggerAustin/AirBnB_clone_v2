@@ -25,10 +25,11 @@ class DBStorage:
         host = os.getenv('HBNB_MYSQL_HOST')
         database = os.getenv('HBNB_MYSQL_DB')
         HBNB_ENV = os.getenv('HBNB_ENV')
-        #syntax dialect+driver://user:pwd@host:port/db
-        self.engine.create(f'mysql+mysqldb://{user}:{password}@{host}/{database}', pool_pre_ping=True)
+        # syntax dialect+driver://user:pwd@host:port/db
+        head = f'mysql://{user}:{password}@{host}/{database}'
+        self.__engine = create_engine(head, pool_pre_ping=True)
 
-        #if HBNB_ENV == test drop all tables
+        # if HBNB_ENV == test drop all tables
         if HBNB_ENV == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -55,7 +56,7 @@ class DBStorage:
             self.__session.delete(obj)
     def reload(self):
         """"create all tables in db and current db session"""
-        Base.metadata.create.all(self.__engine)
+        Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
