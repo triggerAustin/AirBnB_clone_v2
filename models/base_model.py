@@ -29,7 +29,7 @@ class BaseModel:
                      else:
                          if '\\"' in value:
                              value = eval(value)
-                            setattr(self, key, value)
+                         setattr(self, key, value)
 
     def __str__(self):
         """Returns a string representation of the instance"""
